@@ -7,15 +7,6 @@ import (
 	"github.com/intdxdt/geom"
 )
 
-
-//Linear interface
-type Linear interface {
-	Coordinates() []*geom.Point
-	Polyline()    *Polyline
-	Score(Linear, *rng.Range) (int, float64)
-}
-
-
 //Polyline Type
 type Polyline struct {
 	Coordinates []*geom.Point
