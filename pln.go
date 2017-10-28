@@ -61,7 +61,13 @@ func (ln *Polyline) Segment(rng *rng.Range) *seg.Seg {
 
 //generates sub polyline from generator indices
 func (ln *Polyline) SubPolyline(rng *rng.Range) *Polyline {
-	return New(ln.Coordinates[rng.I():rng.J()+1])
+	return New(ln.SubCoordinates(rng))
+}
+
+//generates sub polyline from generator indices
+func (ln *Polyline) SubCoordinates(rng *rng.Range) []*geom.Point {
+	var i, n = rng.I(), rng.J()+1
+	return ln.Coordinates[i:n:n]
 }
 
 //Length of coordinates in polyline
