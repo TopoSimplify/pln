@@ -55,7 +55,7 @@ func (ln *Polyline) Range() *rng.Range {
 
 //Segment given range
 func (ln *Polyline) Segment(rng *rng.Range) *seg.Seg {
-	var i, j = rng.I(), rng.J()
+	var i, j = rng.I, rng.J
 	return seg.NewSeg(ln.Coordinates[i], ln.Coordinates[j], i, j)
 }
 
@@ -66,7 +66,7 @@ func (ln *Polyline) SubPolyline(rng *rng.Range) *Polyline {
 
 //generates sub polyline from generator indices
 func (ln *Polyline) SubCoordinates(rng *rng.Range) []*geom.Point {
-	var i, n = rng.I(), rng.J()+1
+	var i, n = rng.I, rng.J+1
 	return ln.Coordinates[i:n:n]
 }
 
