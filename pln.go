@@ -1,8 +1,8 @@
 package pln
 
 import (
-	"simplex/seg"
-	"simplex/rng"
+	"github.com/TopoSimplify/seg"
+	"github.com/TopoSimplify/rng"
 	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
 )
