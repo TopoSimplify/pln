@@ -1,20 +1,20 @@
 package pln
 
 import (
-	"github.com/TopoSimplify/seg"
-	"github.com/TopoSimplify/rng"
 	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
+	"github.com/TopoSimplify/seg"
+	"github.com/TopoSimplify/rng"
 )
 
 //Polyline Type
 type Polyline struct {
-	Coordinates []*geom.Point
+	Coordinates []geom.Point
 	Geometry    *geom.LineString
 }
 
 //construct new polyline
-func New(coordinates []*geom.Point) *Polyline {
+func New(coordinates []geom.Point) *Polyline {
 	var n = len(coordinates)
 	return &Polyline{
 		Coordinates: coordinates[:n:n],
@@ -32,10 +32,6 @@ func (ln *Polyline) Polyline() *Polyline {
 	return ln
 }
 
-//Coordinates at index i
-func (ln *Polyline) Coordinate(i int) *geom.Point {
-	return ln.Coordinates[i]
-}
 
 //Polyline segments
 func (ln *Polyline) Segments() []*seg.Seg {
@@ -43,7 +39,7 @@ func (ln *Polyline) Segments() []*seg.Seg {
 	var lst = make([]*seg.Seg, 0)
 	for i = 0; i < ln.Len()-1; i++ {
 		j = i + 1
-		lst = append(lst, seg.NewSeg(ln.Coordinates[i], ln.Coordinates[j], i, j))
+		lst = append(lst, seg.NewSeg(&ln.Coordinates[i], &ln.Coordinates[j], i, j))
 	}
 	return lst
 }
@@ -56,7 +52,7 @@ func (ln *Polyline) Range() *rng.Range {
 //Segment given range
 func (ln *Polyline) Segment(rng *rng.Range) *seg.Seg {
 	var i, j = rng.I, rng.J
-	return seg.NewSeg(ln.Coordinates[i], ln.Coordinates[j], i, j)
+	return seg.NewSeg(&ln.Coordinates[i], &ln.Coordinates[j], i, j)
 }
 
 //generates sub polyline from generator indices
@@ -65,7 +61,7 @@ func (ln *Polyline) SubPolyline(rng *rng.Range) *Polyline {
 }
 
 //generates sub polyline from generator indices
-func (ln *Polyline) SubCoordinates(rng *rng.Range) []*geom.Point {
+func (ln *Polyline) SubCoordinates(rng *rng.Range) []geom.Point {
 	var i, n = rng.I, rng.J+1
 	return ln.Coordinates[i:n:n]
 }
