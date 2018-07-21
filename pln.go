@@ -45,23 +45,23 @@ func (ln *Polyline) Segments() []*seg.Seg {
 }
 
 //Range of entire polyline
-func (ln *Polyline) Range() *rng.Range {
-	return rng.NewRange(0, ln.Len()-1)
+func (ln *Polyline) Range() rng.Rng {
+	return rng.Range(0, ln.Len()-1)
 }
 
 //Segment given range
-func (ln *Polyline) Segment(rng *rng.Range) *seg.Seg {
+func (ln *Polyline) Segment(rng *rng.Rng) *seg.Seg {
 	var i, j = rng.I, rng.J
 	return seg.NewSeg(&ln.Coordinates[i], &ln.Coordinates[j], i, j)
 }
 
 //generates sub polyline from generator indices
-func (ln *Polyline) SubPolyline(rng *rng.Range) *Polyline {
+func (ln *Polyline) SubPolyline(rng rng.Rng) *Polyline {
 	return New(ln.SubCoordinates(rng))
 }
 
 //generates sub polyline from generator indices
-func (ln *Polyline) SubCoordinates(rng *rng.Range) []geom.Point {
+func (ln *Polyline) SubCoordinates(rng rng.Rng) []geom.Point {
 	var i, n = rng.I, rng.J+1
 	return ln.Coordinates[i:n:n]
 }
