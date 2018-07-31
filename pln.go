@@ -32,7 +32,6 @@ func (ln *Polyline) Polyline() *Polyline {
 	return ln
 }
 
-
 //Polyline segments
 func (ln *Polyline) Segments() []*seg.Seg {
 	var i, j int
