@@ -1,7 +1,6 @@
 package pln
 
 import (
-	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
 	"github.com/TopoSimplify/seg"
 	"github.com/TopoSimplify/rng"
@@ -9,27 +8,12 @@ import (
 
 //Polyline Type
 type Polyline struct {
-	Coordinates []geom.Point
-	Geometry    *geom.LineString
+	*geom.LineString
 }
 
 //construct new polyline
-func New(coordinates []geom.Point) *Polyline {
-	var n = len(coordinates)
-	return &Polyline{
-		Coordinates: coordinates[:n:n],
-		Geometry:    geom.NewLineString(coordinates),
-	}
-}
-
-//Bounding box of polyline
-func (ln *Polyline) BBox() *mbr.MBR {
-	return ln.Geometry.BBox()
-}
-
-//polyline
-func (ln *Polyline) Polyline() *Polyline {
-	return ln
+func New(coordinates geom.Coords) *Polyline {
+	return &Polyline{geom.NewLineString(coordinates)}
 }
 
 //Polyline segments
