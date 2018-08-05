@@ -43,12 +43,9 @@ func (ln *Polyline) SubPolyline(rng rng.Rng) *Polyline {
 
 //generates sub polyline from generator indices
 func (ln *Polyline) SubCoordinates(rng rng.Rng) geom.Coords {
-	var coordinates = ln.Coordinates
-	coordinates.Idxs = make([]int, 0, rng.J-rng.I+1)
-	for i := rng.I; i <= rng.J; i++ {
-		coordinates.Idxs = append(coordinates.Idxs, i)
-	}
-	return coordinates
+	var coords = ln.Coordinates
+	coords.Idxs = coords.Idxs[rng.I:rng.J+1] //make([]int, 0, rng.J-rng.I+1)
+	return coords
 }
 
 //Length of coordinates in polyline
