@@ -18,10 +18,10 @@ func New(coordinates geom.Coords) *Polyline {
 //Polyline segments
 func (ln *Polyline) Segments() []*geom.Segment {
 	var i int
-	var n = ln.Len()-1
+	var n = ln.Len() - 1
 	var lst = make([]*geom.Segment, 0, n)
 	for i = 0; i < n; i++ {
-		lst = append(lst, geom.NewSegment(ln.Coordinates, i, i + 1))
+		lst = append(lst, geom.NewSegment(ln.Coordinates, i, i+1))
 	}
 	return lst
 }
@@ -44,7 +44,10 @@ func (ln *Polyline) SubPolyline(rng rng.Rng) *Polyline {
 //generates sub polyline from generator indices
 func (ln *Polyline) SubCoordinates(rng rng.Rng) geom.Coords {
 	var coords = ln.Coordinates
-	coords.Idxs = coords.Idxs[rng.I:rng.J+1] //make([]int, 0, rng.J-rng.I+1)
+	coords.Idxs = make([]int, 0, rng.J-rng.I+1)
+	for i := rng.I; i <= rng.J; i++ {
+		coords.Idxs = append(coords.Idxs, i)
+	}
 	return coords
 }
 
