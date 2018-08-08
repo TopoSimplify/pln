@@ -3,6 +3,8 @@ package pln
 import (
 	"github.com/intdxdt/geom"
 	"github.com/TopoSimplify/rng"
+	"github.com/intdxdt/geom/mono"
+	"github.com/intdxdt/mbr"
 )
 
 //Polyline Type
@@ -11,19 +13,25 @@ type Polyline struct {
 }
 
 //construct new polyline
-func New(coordinates geom.Coords) *Polyline {
-	return &Polyline{geom.NewLineString(coordinates)}
+func CreatePolyline(coordinates geom.Coords) Polyline {
+	return Polyline{geom.NewLineString(coordinates)}
 }
 
 //Polyline segments
-func (ln *Polyline) Segments() []*geom.Segment {
-	var i int
+func (ln *Polyline) SegmentBounds() []mono.MBR {
+	var I, J int
 	var n = ln.Len() - 1
-	var lst = make([]*geom.Segment, 0, n)
-	for i = 0; i < n; i++ {
-		lst = append(lst, geom.NewSegment(ln.Coordinates, i, i+1))
+	var a, b *geom.Point
+	var items = make([]mono.MBR, 0, n)
+	for i := 0; i < n; i++ {
+		a, b = ln.Coordinates.Pt(i), ln.Coordinates.Pt(i+1)
+		I, J = ln.Coordinates.Idxs[i], ln.Coordinates.Idxs[i+1]
+		items = append(items, mono.MBR{
+			MBR: mbr.CreateMBR(a[geom.X], a[geom.Y], b[geom.X], b[geom.Y]),
+			I: I, J: J,
+		})
 	}
-	return lst
+	return items
 }
 
 //Range of entire polyline
@@ -37,8 +45,8 @@ func (ln *Polyline) Segment(rng *rng.Rng) *geom.Segment {
 }
 
 //generates sub polyline from generator indices
-func (ln *Polyline) SubPolyline(rng rng.Rng) *Polyline {
-	return New(ln.SubCoordinates(rng))
+func (ln *Polyline) SubPolyline(rng rng.Rng) Polyline {
+	return CreatePolyline(ln.SubCoordinates(rng))
 }
 
 //generates sub polyline from generator indices
