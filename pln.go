@@ -36,7 +36,7 @@ func (ln *Polyline) SegmentBounds() []mono.MBR {
 
 //Range of entire polyline
 func (ln *Polyline) Range() rng.Rng {
-	return rng.Range(0, ln.Len()-1)
+	return rng.Range(ln.Coordinates.Idxs[0], ln.Coordinates.Idxs[ln.Len()-1])
 }
 
 //Segment given range
