@@ -1,8 +1,8 @@
 package pln
 
 import (
-	"github.com/intdxdt/geom"
 	"github.com/TopoSimplify/rng"
+	"github.com/intdxdt/geom"
 	"github.com/intdxdt/geom/mono"
 	"github.com/intdxdt/mbr"
 )
@@ -28,7 +28,7 @@ func (ln *Polyline) SegmentBounds() []mono.MBR {
 		I, J = ln.Coordinates.Idxs[i], ln.Coordinates.Idxs[i+1]
 		items = append(items, mono.MBR{
 			MBR: mbr.CreateMBR(a[geom.X], a[geom.Y], b[geom.X], b[geom.Y]),
-			I: I, J: J,
+			I:   I, J: J,
 		})
 	}
 	return items
