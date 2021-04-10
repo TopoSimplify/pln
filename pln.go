@@ -40,8 +40,8 @@ func (ln *Polyline) Range() rng.Rng {
 }
 
 //Segment given range
-func (ln *Polyline) Segment(rng *rng.Rng) *geom.Segment {
-	return geom.NewSegment(ln.Coordinates, rng.I, rng.J)
+func (ln *Polyline) Segment(i, j int) *geom.Segment {
+	return geom.NewSegment(ln.Coordinates, i, j)
 }
 
 //generates sub polyline from generator indices
